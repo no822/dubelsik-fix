@@ -1,0 +1,27 @@
+version: "3"
+
+tasks:
+  install:
+    desc: Install dependencies
+    cmds:
+      - npm install
+
+  build:
+    desc: Compile TypeScript to dist
+    cmds:
+      - npm run build
+
+  test:
+    desc: Run Vitest suite
+    cmds:
+      - npm test
+
+  test:watch:
+    desc: Watch tests
+    cmds:
+      - npm run test:watch
+
+  dev:
+    desc: Run CLI in dev mode (tsx)
+    cmds:
+      - npm run dev -- {{.CLI_ARGS}}

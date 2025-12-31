@@ -124,54 +124,74 @@ const keyToJamo: Record<string, string> = {
 };
 
 const vowelCombinations: Record<string, string> = {
-  "ㅗㅏ": "ㅘ",
-  "ㅗㅐ": "ㅙ",
-  "ㅗㅣ": "ㅚ",
-  "ㅜㅓ": "ㅝ",
-  "ㅜㅔ": "ㅞ",
-  "ㅜㅣ": "ㅟ",
-  "ㅡㅣ": "ㅢ",
-  "ㅘㅣ": "ㅙ",
-  "ㅝㅣ": "ㅞ",
+  ㅗㅏ: "ㅘ",
+  ㅗㅐ: "ㅙ",
+  ㅗㅣ: "ㅚ",
+  ㅜㅓ: "ㅝ",
+  ㅜㅔ: "ㅞ",
+  ㅜㅣ: "ㅟ",
+  ㅡㅣ: "ㅢ",
+  ㅘㅣ: "ㅙ",
+  ㅝㅣ: "ㅞ",
 };
 
 const finalCombinations: Record<string, string> = {
-  "ㄱㅅ": "ㄳ",
-  "ㄴㅈ": "ㄵ",
-  "ㄴㅎ": "ㄶ",
-  "ㄹㄱ": "ㄺ",
-  "ㄹㅁ": "ㄻ",
-  "ㄹㅂ": "ㄼ",
-  "ㄹㅅ": "ㄽ",
-  "ㄹㅌ": "ㄾ",
-  "ㄹㅍ": "ㄿ",
-  "ㄹㅎ": "ㅀ",
-  "ㅂㅅ": "ㅄ",
+  ㄱㅅ: "ㄳ",
+  ㄴㅈ: "ㄵ",
+  ㄴㅎ: "ㄶ",
+  ㄹㄱ: "ㄺ",
+  ㄹㅁ: "ㄻ",
+  ㄹㅂ: "ㄼ",
+  ㄹㅅ: "ㄽ",
+  ㄹㅌ: "ㄾ",
+  ㄹㅍ: "ㄿ",
+  ㄹㅎ: "ㅀ",
+  ㅂㅅ: "ㅄ",
 };
 
 const finalSplits: Record<string, [string, string]> = {
-  "ㄳ": ["ㄱ", "ㅅ"],
-  "ㄵ": ["ㄴ", "ㅈ"],
-  "ㄶ": ["ㄴ", "ㅎ"],
-  "ㄺ": ["ㄹ", "ㄱ"],
-  "ㄻ": ["ㄹ", "ㅁ"],
-  "ㄼ": ["ㄹ", "ㅂ"],
-  "ㄽ": ["ㄹ", "ㅅ"],
-  "ㄾ": ["ㄹ", "ㅌ"],
-  "ㄿ": ["ㄹ", "ㅍ"],
-  "ㅀ": ["ㄹ", "ㅎ"],
-  "ㅄ": ["ㅂ", "ㅅ"],
+  ㄳ: ["ㄱ", "ㅅ"],
+  ㄵ: ["ㄴ", "ㅈ"],
+  ㄶ: ["ㄴ", "ㅎ"],
+  ㄺ: ["ㄹ", "ㄱ"],
+  ㄻ: ["ㄹ", "ㅁ"],
+  ㄼ: ["ㄹ", "ㅂ"],
+  ㄽ: ["ㄹ", "ㅅ"],
+  ㄾ: ["ㄹ", "ㅌ"],
+  ㄿ: ["ㄹ", "ㅍ"],
+  ㅀ: ["ㄹ", "ㅎ"],
+  ㅄ: ["ㅂ", "ㅅ"],
 };
 
-const VOWELS = new Set(Object.values(keyToJamo).filter((j) => isHangulJungseong(j)));
+const VOWELS = new Set(
+  Object.values(keyToJamo).filter((j) => isHangulJungseong(j)),
+);
 
 function isHangulJungseong(jamo: string): boolean {
   return (
     jamo >= "ㅏ" &&
     jamo <= "ㅣ" &&
-    !["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ",
-        "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"]
-     .includes(jamo)
+    ![
+      "ㄱ",
+      "ㄲ",
+      "ㄴ",
+      "ㄷ",
+      "ㄸ",
+      "ㄹ",
+      "ㅁ",
+      "ㅂ",
+      "ㅃ",
+      "ㅅ",
+      "ㅆ",
+      "ㅇ",
+      "ㅈ",
+      "ㅉ",
+      "ㅊ",
+      "ㅋ",
+      "ㅌ",
+      "ㅍ",
+      "ㅎ",
+    ].includes(jamo)
   );
 }
 
@@ -187,7 +207,11 @@ function combineFinal(prev: string, next: string): string | null {
   return finalCombinations[prev + next] ?? null;
 }
 
-function composeSyllable(initial: string, medial: string, final: string): string {
+function composeSyllable(
+  initial: string,
+  medial: string,
+  final: string,
+): string {
   const initialIndex = CHOSEONG.indexOf(initial);
   const medialIndex = JUNGSEONG.indexOf(medial);
   const finalIndex = JONGSEONG.indexOf(final);
@@ -196,7 +220,8 @@ function composeSyllable(initial: string, medial: string, final: string): string
     return `${initial}${medial}${final}`;
   }
 
-  const codePoint = 0xac00 + (initialIndex * 21 + medialIndex) * 28 + finalIndex;
+  const codePoint =
+    0xac00 + (initialIndex * 21 + medialIndex) * 28 + finalIndex;
   return String.fromCharCode(codePoint);
 }
 
@@ -223,6 +248,89 @@ function asJamo(inputChar: string): string | null {
   return keyToJamo[inputChar] ?? null;
 }
 
+function handleVowel(
+  vowel: string,
+  state: SyllableState,
+  push: () => void,
+  appendOutput: (syllable: string) => void,
+): void {
+  if (!state.initial && !state.medial && !state.final) {
+    state.initial = "ㅇ";
+    state.medial = vowel;
+    return;
+  }
+
+  if (state.initial && !state.medial) {
+    state.medial = vowel;
+    return;
+  }
+
+  if (state.initial && state.medial && !state.final) {
+    const combined = combineVowels(state.medial, vowel);
+    if (combined) {
+      state.medial = combined;
+    } else {
+      push();
+      state.initial = "ㅇ";
+      state.medial = vowel;
+    }
+    return;
+  }
+
+  if (state.initial && state.medial && state.final) {
+    const split = finalSplits[state.final];
+    if (split) {
+      const [stay, move] = split;
+      const prev = composeSyllable(state.initial, state.medial, stay);
+      appendOutput(prev);
+      state.initial = move;
+      state.medial = vowel;
+      state.final = "";
+    } else {
+      const prev = composeSyllable(state.initial, state.medial, "");
+      appendOutput(prev);
+      state.initial = state.final;
+      state.medial = vowel;
+      state.final = "";
+    }
+  }
+}
+
+function handleConsonant(
+  consonant: string,
+  state: SyllableState,
+  push: () => void,
+  appendOutput: (syllable: string) => void,
+): void {
+  if (!state.initial && !state.medial && !state.final) {
+    state.initial = consonant;
+    return;
+  }
+
+  if (state.initial && !state.medial) {
+    appendOutput(state.initial);
+    state.initial = consonant;
+    return;
+  }
+
+  if (state.initial && state.medial && !state.final) {
+    state.final = consonant;
+    return;
+  }
+
+  if (state.initial && state.medial && state.final) {
+    const combined = combineFinal(state.final, consonant);
+    if (combined) {
+      state.final = combined;
+    } else {
+      push();
+      state.initial = consonant;
+    }
+  }
+}
+
+function emitAndReset() {}
+
 /**
  * Transliterate a string typed with a two-set (두벌식) keyboard layout into composed Hangul.
  */
@@ -237,6 +345,14 @@ export function transliterate(input: string): string {
     state.final = "";
   };
 
+  const appendOutput = (s: string): void => {
+    output += s;
+  };
+
+  // <헬퍼 추출>
+  // 상태 업데이트
+  // emit/reset
+
   for (const ch of input) {
     const jamo = asJamo(ch);
 
@@ -247,75 +363,10 @@ export function transliterate(input: string): string {
     }
 
     if (isVowel(jamo)) {
-      if (!state.initial && !state.medial && !state.final) {
-        state.initial = "ㅇ";
-        state.medial = jamo;
-        continue;
-      }
-
-      if (state.initial && !state.medial) {
-        state.medial = jamo;
-        continue;
-      }
-
-      if (state.initial && state.medial && !state.final) {
-        const combined = combineVowels(state.medial, jamo);
-        if (combined) {
-          state.medial = combined;
-        } else {
-          pushState();
-          state.initial = "ㅇ";
-          state.medial = jamo;
-        }
-        continue;
-      }
-
-      if (state.initial && state.medial && state.final) {
-        const split = finalSplits[state.final];
-        if (split) {
-          const [stay, move] = split;
-          const prev = composeSyllable(state.initial, state.medial, stay);
-          output += prev;
-          state.initial = move;
-          state.medial = jamo;
-          state.final = "";
-        } else {
-          const prev = composeSyllable(state.initial, state.medial, "");
-          output += prev;
-          state.initial = state.final;
-          state.medial = jamo;
-          state.final = "";
-        }
-      }
-
+      handleVowel(jamo, state, pushState, appendOutput);
       continue;
-    }
-
-    // Consonant
-    if (!state.initial && !state.medial && !state.final) {
-      state.initial = jamo;
-      continue;
-    }
-
-    if (state.initial && !state.medial) {
-      output += state.initial;
-      state.initial = jamo;
-      continue;
-    }
-
-    if (state.initial && state.medial && !state.final) {
-      state.final = jamo;
-      continue;
-    }
-
-    if (state.initial && state.medial && state.final) {
-      const combined = combineFinal(state.final, jamo);
-      if (combined) {
-        state.final = combined;
-      } else {
-        pushState();
-        state.initial = jamo;
-      }
+    } else {
+      handleConsonant(jamo, state, pushState, appendOutput);
     }
   }
 

@@ -2,7 +2,7 @@
 
 ## Basic
 
-- [ ] npm 배포 + Neovim 연동: 퍼블리시 후 전역 설치(`npm i -g ...`) 기반 비주얼 선택 변환 키맵 Lua 코드 제공.
+- [ ] npm 배포 + Neovim 연동: 퍼블리시 후 전역 설치(`npm i -g ...`) 기반 비주얼 선택 변환 키맵 Lua 코드 제공. (준비 문서: docs/publish-neovim.md)
 
 ## 확장 아이디어
 

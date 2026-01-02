@@ -15,7 +15,10 @@ Examples:
   dubelsik "hello world"
 `;
 
-export function runCli(argv: string[], io: CliIO = { out: console.log, err: console.error }): number {
+export function runCli(
+  argv: string[],
+  io: CliIO = { out: console.log, err: console.error },
+): number {
   if (argv.includes("--help") || argv.includes("-h")) {
     io.out(USAGE);
     return 0;

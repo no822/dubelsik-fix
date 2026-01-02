@@ -1,9 +1,13 @@
 {
   "name": "dubelsik-converter",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "description": "Two-set (두벌식) keyboard transliterator from alphabet input to composed Hangul.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/no822/dubelsik-fix.git"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

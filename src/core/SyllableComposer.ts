@@ -1,7 +1,7 @@
 import { CHOSEONG, JONGSEONG, JUNGSEONG } from "./jamo-data";
-import { SyllableState } from "./handlers";
+import { SyllableBuffer } from "./SyllableBuffer";
 
-export function composeSyllable(
+function composeSyllable(
   initial: string,
   medial: string,
   final: string,
@@ -19,7 +19,7 @@ export function composeSyllable(
   return String.fromCharCode(codePoint);
 }
 
-export function flushBuffer(state: SyllableState): string {
+export function flushSyllableBuffer(state: SyllableBuffer): string {
   const { initial, medial, final } = state;
   if (!initial && !medial && !final) {
     return "";

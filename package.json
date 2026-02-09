@@ -1,6 +1,6 @@
 {
   "name": "dubelsik-converter",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "description": "Two-set (두벌식) keyboard transliterator from alphabet input to composed Hangul.",
   "license": "MIT",

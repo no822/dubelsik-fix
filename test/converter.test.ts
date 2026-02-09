@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { runCli } from "../src/cli";
+import { HangulSyllableStateMachine } from "../src/core/stateMachine/HangulSyllableStateMachine";
 import { transliterate } from "../src/converter";
 
 describe("transliterate", () => {
@@ -133,6 +134,10 @@ describe("transliterate", () => {
       expect(transliterate("rksk123")).toBe("가나123");
     });
 
+    it("resets state so a following vowel starts with ㅇ", () => {
+      expect(transliterate("r1k")).toBe("ㄱ1아");
+    });
+
     it("preserves symbols while flushing pending syllables first", () => {
       expect(transliterate("rkt!")).toBe("갓!");
     });
@@ -146,6 +151,37 @@ describe("transliterate", () => {
     it("locks in expected splits when a vowel follows a complex final", () => {
       expect(transliterate("sjrtp")).toBe("넉세");
     });
+  });
+
+  describe("invalid final consonants", () => {
+    it("flushes the syllable and starts a new one for ㄸ", () => {
+      expect(transliterate("rkEk")).toBe("가따");
+    });
+
+    it("flushes the syllable and starts a new one for ㅃ", () => {
+      expect(transliterate("rkQk")).toBe("가빠");
+    });
+
+    it("flushes the syllable and starts a new one for ㅉ", () => {
+      expect(transliterate("rkWk")).toBe("가짜");
+    });
+  });
+});
+
+describe("state machine defensive branch", () => {
+  it("falls back to a vowel-leading syllable on inconsistent composite state", () => {
+    const machine = new HangulSyllableStateMachine();
+    machine.setCurrentState(machine.initialMedialFinalCompositeConsonantState, {
+      initial: "ㄱ",
+      medial: "ㅏ",
+      // Force an inconsistent state: composite state with a non-splittable final.
+      final: "ㄲ",
+    });
+
+    machine.inputVowel("ㅏ");
+    machine.emit(machine.currentState.syllableState);
+
+    expect(machine.output).toBe("가까");
   });
 });
 
